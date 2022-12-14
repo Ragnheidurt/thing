@@ -1,0 +1,42 @@
+cvec = [13 14 21 20 12 51 85 33 24];
+lambda = [0.057 0.0435 0.0478 0.0599 0.0288 0.0533 0.0618];
+T = [6 8 14 25 13 19 36 8 14];
+
+sum = 0;
+cmax = 50;
+
+for i = 1:9
+    EBOrest = EBOrest + recursiveEBO(lambdavec,Tvec,0,i)
+end
+
+while sum<cmax
+    EBOrest = 0;
+
+
+    
+end
+
+
+
+
+function r = rebo(lambdavec,Tvec,j)
+    pj = zeros(9,1);
+    for i=1:9
+        pj(i) = (lambdavec(j)*Tvec(j))^i/factorial(i)*exp(-lambdavec(j)*Tvec(j));
+    end
+    r = sum(pj(sj:9));
+end
+
+
+
+function r = recursiveEBO(lambdavec,Tvec,sj,j)
+   if sj == 0
+        r = lambdavec(j)*Tvec(j);
+   else
+       pj = zeros(9,1);
+       for i=1:9
+           pj(i) = (lambdavec(j)*Tvec(j))^i/factorial(i)*exp(-lambdavec(j)*Tvec(j));
+       end
+       r = recursiveEBO(lambdavec,Tvec,sj-1,j) - sum(pj(sj:9));       
+   end
+end
